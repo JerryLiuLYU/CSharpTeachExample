@@ -98,7 +98,7 @@ namespace ConsoleApplication1
                 Name = "伊涅斯塔",
                 Position = Position.MidFeild,
                 Gender = Gender.Male,
-                AttackPower = 85,
+                AttackPower = 90,
                 DefendPower = 78,
                 Stability = 90,
                 Salary = 8
