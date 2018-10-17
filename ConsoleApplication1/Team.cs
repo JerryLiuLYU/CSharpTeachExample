@@ -28,10 +28,18 @@ namespace ConsoleApplication1
         {
             players = new List<Player>();
         }
+        /// <summary>
+        /// 增加教练
+        /// </summary>
+        /// <param name="coach"></param>
         public void AddCoach(Coach coach)
         {
             this.coach = coach;
         }
+        /// <summary>
+        /// 增加球员
+        /// </summary>
+        /// <param name="player"></param>
         public void AddPlayer(Player player)
         {
             if (players.Count <  MaxNumOfPlayer)
@@ -43,6 +51,11 @@ namespace ConsoleApplication1
                 throw new Exception("超出人数限制");
             }
         }
+        /// <summary>
+        /// 解雇球员
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Player KickPlayer(string id)
         {
             int kickPlayerIndex = players.FindIndex(p => p.Id == id);
@@ -76,11 +89,20 @@ namespace ConsoleApplication1
             double result = 0.0;
             if (players != null)
             {
+                int count = 0;
                 foreach (var item in players)
                 {
-                    result += item.AttackPower;
+                    if (item.Position == Position.Forward || item.Position == Position.MidFeild)
+                    {
+                        result += item.AttackPower;
+                        count++;
+                    }                    
                 }
-                result = result / players.Count;
+                if (count>0)
+                {
+                    result = result / count;
+                }
+                
 
             }
             return result;
@@ -90,32 +112,41 @@ namespace ConsoleApplication1
             double result = 0.0;
             if (players != null)
             {
+                int count = 0;
                 foreach (var item in players)
                 {
-                    result += item.DefendPower;
+                    if (item.Position == Position.MidFeild || item.Position == Position.Defender || item.Position == Position.GoalKeeper)
+                    {
+                        result += item.DefendPower;
+                        count++;
+                    }
                 }
-                result = result / players.Count;
+                if (count > 0)
+                {
+                    result = result / count;
+                }
+
 
             }
             return result;
         }
         public double GetTeamStability()
         {
-            double result = 0.0;
+            double NotStability = 0.0;
             if (players != null)
             {
                 foreach (var item in players)
                 {
-                    result += item.Stability;
+                    NotStability += (100-item.Stability);
                 }
-                result = (result / players.Count) * (coach.GetRate()/100);
+                NotStability = (NotStability / players.Count) * (1.5-coach.GetRate()/100.0 );
 
             }
-            return result;
+            return 100- NotStability;
         }
         public double GetRate()
         {
-            return (GetTeamAttackPower() + GetTeamDefendPower() + GetTeamStability()) / 3;
+            return (GetTeamAttackPower() + GetTeamDefendPower() + GetTeamStability()) / 3.0;
         }
     }
 }

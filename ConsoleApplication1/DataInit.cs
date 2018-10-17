@@ -8,6 +8,10 @@ namespace ConsoleApplication1
 {
     public  static class DataInit
     {
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        /// <param name="league"></param>
         public static void InitData(League league)
         {
             #region team1
@@ -126,8 +130,94 @@ namespace ConsoleApplication1
                 Salary = 7
             });
             #endregion
+            #region team3
+            var team3 = new Team();
+            team3.Name = "中国";
+            team3.AddCoach(new Coach()
+            {
+                Gender = Gender.Male,
+                Name = "高洪波",
+                Id = "ZG000",
+                PersonalPower = 40,
+                TacticsPower = 60,
+                Position = Position.Coach,
+                Salary = 7
+            });
+            team3.AddPlayer(new Player
+            {
+                Id = "ZG001",
+                Name = "李毅",
+                Position = Position.Forward,
+                Gender = Gender.Male,
+                AttackPower = 60,
+                DefendPower = 10,
+                Stability = 60,
+                Salary = 10
+            });
+            team3.AddPlayer(new Player
+            {
+                Id = "ZG002",
+                Name = "郑智",
+                Position = Position.MidFeild,
+                Gender = Gender.Male,
+                AttackPower = 55,
+                DefendPower = 50,
+                Stability = 70,
+                Salary = 8
+            });
+            team3.AddPlayer(new Player
+            {
+                Id = "ZG003",
+                Name = "张三",
+                Position = Position.Defender,
+                Gender = Gender.Male,
+                AttackPower = 30,
+                DefendPower = 75,
+                Stability = 66,
+                Salary = 7
+            });
+            team3.AddPlayer(new Player
+            {
+                Id = "ZG004",
+                Name = "李四",
+                Position = Position.GoalKeeper,
+                Gender = Gender.Male,
+                AttackPower = 0,
+                DefendPower = 70,
+                Stability = 80,
+                Salary = 7
+            });
+            #endregion
             league.AddTeam(team1);
             league.AddTeam(team2);
+            league.AddTeam(team3);
+        }
+        /// <summary>
+        /// 使用文件，初始化数据
+        /// </summary>
+        /// <param name="league"></param>
+        /// <param name="filePath"></param>
+        public static void InitData(League league, string filePath)
+        {
+
+        }
+        /// <summary>
+        /// 保存数据
+        /// </summary>
+        /// <param name="league"></param>
+        /// <param name="saveFilePath"></param>
+        public static void SaveData(League league, string saveFilePath)
+        {
+
+        }
+        /// <summary>
+        /// 载入数据
+        /// </summary>
+        /// <param name="league"></param>
+        /// <param name="loadFilePath"></param>
+        public static void LoadData(League league, string loadFilePath)
+        {
+
         }
     }
 }

@@ -18,6 +18,7 @@ namespace ConsoleApplication1
             };
         static void Main(string[] args)
         {
+    
             League league = new League();
             league.Name = "西甲联赛";
             DataInit.InitData(league);
@@ -41,12 +42,30 @@ namespace ConsoleApplication1
                     case "3":
                         PrintLeague(league);
                         break;
+                    case "4":
+                        StartMatch(league);
+                        break;
                     default:
                         Console.WriteLine("输入有误，请重新选择");
                         break;
                 }               
             }
 
+        }
+
+        private static void StartMatch(League league)
+        {
+            Console.WriteLine("请输入主场球队名称：");
+            string homeName = Console.ReadLine();
+            Team homeTeam = league.GetTeam(homeName);
+            Console.WriteLine("请输入客场球队名称：");
+            string awayName = Console.ReadLine();
+            Team awayTeam = league.GetTeam(awayName);
+            if (homeTeam != null && awayTeam !=null)
+            {
+                Match newMatch = new Match(homeTeam, awayTeam);
+                Match.DisplayMatch(newMatch.Run());
+            }
         }
 
         private static void PrintTeam(League league)
