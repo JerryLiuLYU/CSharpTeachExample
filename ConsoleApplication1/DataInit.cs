@@ -188,6 +188,7 @@ namespace ConsoleApplication1
                 Salary = 7
             });
             #endregion
+            league.Teams.Clear();
             league.AddTeam(team1);
             league.AddTeam(team2);
             league.AddTeam(team3);

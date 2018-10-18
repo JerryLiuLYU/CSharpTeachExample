@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -39,7 +40,25 @@ namespace WebApplication1.Controllers
         {
             return currentLeague.Teams;
         }
+        [HttpPost]
+        public MatchInfo BeginMatch(MatchModel match)
+        {
+            Team homeTeam = currentLeague.GetTeam(match.HomeTeamName);
+            
+            Team awayTeam = currentLeague.GetTeam(match.AwayTeamName);
 
- 
+            if (homeTeam != null && awayTeam != null)
+            {
+                Match newMatch = new Match(homeTeam, awayTeam);
+                return newMatch.Run();
+            }
+            else
+            {
+                return new MatchInfo();
+            }
+            
+        }
+
+
     }
 }
