@@ -14,7 +14,8 @@ namespace ConsoleApplication1
             "添加球队",
             "查看球队",
             "联赛信息",
-            "开始比赛"
+            "开始比赛",
+            "比赛多次"
             };
         static void Main(string[] args)
         {
@@ -45,12 +46,36 @@ namespace ConsoleApplication1
                     case "4":
                         StartMatch(league);
                         break;
+                    case "5":
+                        StartManyMatch(league);
+                        break;
                     default:
                         Console.WriteLine("输入有误，请重新选择");
                         break;
                 }               
             }
 
+        }
+
+        private static void StartManyMatch(League league)
+        {
+            Console.WriteLine("请输入主场球队名称：");
+            string homeName = Console.ReadLine();
+            Team homeTeam = league.GetTeam(homeName);
+            Console.WriteLine("请输入客场球队名称：");
+            string awayName = Console.ReadLine();
+            Team awayTeam = league.GetTeam(awayName);
+            Console.WriteLine("请输入比赛次数：");
+            int ntimes = 0;
+            if (int.TryParse(Console.ReadLine(),out ntimes))
+            {
+                if (homeTeam != null && awayTeam != null)
+                {
+                    Match newMatch = new Match(homeTeam, awayTeam);
+                    newMatch.Run(ntimes);
+                }
+            }
+            
         }
 
         private static void StartMatch(League league)

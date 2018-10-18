@@ -84,6 +84,10 @@ namespace ConsoleApplication1
             Console.WriteLine("----------------------------------------");
             Console.ReadKey();
         }
+        /// <summary>
+        /// 获取球队攻击力，攻击力为球队中，所有前锋和中场球员的攻击力的平均值
+        /// </summary>
+        /// <returns></returns>
         public double GetTeamAttackPower()
         {
             double result = 0.0;
@@ -107,6 +111,10 @@ namespace ConsoleApplication1
             }
             return result;
         }
+        /// <summary>
+        /// 获取球队防御力，为所有中场和后卫和门将球员的防御力平均值
+        /// </summary>
+        /// <returns></returns>
         public double GetTeamDefendPower()
         {
             double result = 0.0;
@@ -132,17 +140,32 @@ namespace ConsoleApplication1
         }
         public double GetTeamStability()
         {
+            double result = 0.0;
+            if (players != null)
+            {
+                foreach (var item in players)
+                {
+                    result += item.Stability;
+                }
+                result = (result / players.Count);
+
+            }
+            double coachAdd = (100 - result) * (coach.GetRate() / 100.0);
+            return result+ coachAdd;
+        }
+        public double GetTeamStability2()
+        {
             double NotStability = 0.0;
             if (players != null)
             {
                 foreach (var item in players)
                 {
-                    NotStability += (100-item.Stability);
+                    NotStability += (100 - item.Stability);
                 }
-                NotStability = (NotStability / players.Count) * (1.5-coach.GetRate()/100.0 );
+                NotStability = (NotStability / players.Count) * (1.5 - coach.GetRate() / 100.0);
 
             }
-            return 100- NotStability;
+            return 100 - NotStability;
         }
         public double GetRate()
         {
