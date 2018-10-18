@@ -8,8 +8,10 @@ namespace ConsoleApplication1
 {
     public class League
     {
+
+        public string Id { get; set; }
         public string Name { get; set; }
-        private List<Team> Teams { get; set; }
+        public List<Team> Teams { get; set; }
         public League()
         {
             Teams = new List<Team>();

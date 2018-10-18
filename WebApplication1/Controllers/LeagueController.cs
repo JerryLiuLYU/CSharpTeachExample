@@ -14,25 +14,30 @@ namespace WebApplication1.Controllers
  
         static League currentLeague = new League();
 
+        /// <summary>
+        /// 初始化联赛
+        /// </summary>
+        /// <param name="l"></param>
         [HttpPost]
-        public void SetLeagueName(League l)
+        public void InitLeague(League l)
         {
+            currentLeague.Id = l.Id;
             currentLeague.Name = l.Name;
+            DataInit.InitData(currentLeague);
         }
-        public HttpResponseMessage GetLeague()
-        {
-            return Request.CreateResponse(HttpStatusCode.Created,currentLeague);
-        }
-        public League GetLeague2()
+        public League GetLeague()
         {
             return currentLeague;
         }
         [HttpPost]
         public void AddTeam(Team team)
         {
-            //var newTeam = new Team();            
-            //newTeam.Name = team.
+            currentLeague.Teams.Add(team);
             currentLeague.AddTeam(team);
+        }
+        public IEnumerable<Team> GetTeams()
+        {
+            return currentLeague.Teams;
         }
 
  
