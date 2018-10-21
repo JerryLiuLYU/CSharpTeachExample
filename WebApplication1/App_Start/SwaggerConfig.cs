@@ -27,6 +27,7 @@ namespace WebApplication1
                     })
                 .EnableSwaggerUi(c =>
                     {
+                        // Ä¬ÈÏµØÖ· http://localhost:37033/swagger/ui/index
                         // Use the "DocumentTitle" option to change the Document title.
                         // Very helpful when you have multiple Swagger pages open, to tell them apart.
                         //
