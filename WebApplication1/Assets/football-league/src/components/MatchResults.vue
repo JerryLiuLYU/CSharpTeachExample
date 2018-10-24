@@ -19,7 +19,7 @@
 export default {
   name: 'MatchResults',
   props: {
-    results: String
+    results: {}
   },
   data: function () {
         return {
@@ -31,16 +31,25 @@ export default {
     computed: {
         matchInfo() {
           let posts = this.results;
+          if (posts.Details == null) {
+              posts={
+                  HomeTeamGoal: 0,
+                  AwayTeamGoal: 0,
+                  Details: [0],
+              }
+          }
           return posts;
         },
     },
      methods: {
         matching(obj) {
             let clearInt = setInterval(function () {
+                if(obj.matchInfo)
+                {
                 console.log(obj)
                 let numOfmatchInfoLasttime = Math.round((obj.proBar-1) / 10) - 1
                 let numOfmatchInfo = Math.round(obj.proBar / 10) - 1
-                let text = obj.matchInfo.Details[numOfmatchInfo];
+                let text = numOfmatchInfo==-1? '' : obj.matchInfo.Details[numOfmatchInfo];
                 if (text!=null && numOfmatchInfoLasttime!=numOfmatchInfo && text.indexOf("Goal")!=-1) {
                     console.log("进球了！！！")
                     if (text.indexOf(obj.matchInfo.HomeTeamName)!=-1) {
@@ -53,6 +62,7 @@ export default {
                 obj.proBar+=1;
                 if (obj.proBar == 100) {
                     clearInterval(clearInt);
+                }
                 }
             }, 200)
         },

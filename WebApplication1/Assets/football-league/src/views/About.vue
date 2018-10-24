@@ -6,13 +6,13 @@
                 <div class="span6 text-center">
                         主队
                         <select v-model="homeTeam">
-                            <option v-for="team in teams" :value="team">{{ team.Name }}</option>
+                            <option v-for="team in teams" :key="team.name" :value="team">{{ team.Name }}</option>
                         </select>
                 </div>
                 <div class="span6 text-center">
                         客场
                         <select v-model="awayTeam">
-                            <option v-for="team in teams" :value="team">{{ team.Name }}</option>
+                            <option v-for="team in teams" :key="team.name" :value="team">{{ team.Name }}</option>
                         </select>
                 </div>
     </div>
@@ -21,24 +21,35 @@
     </div>
 
     <div v-if="loading" class="loader text-center"><img src="img/loader-large.gif" alt="loader"></div>
-    <MatchResults ref="blogpost" v-show="isShowMatch" :results="matchResults"></MatchResults>
+    <MatchResults style="width:800px; margin:auto" ref="blogpost" v-show="isShowMatch" :results="matchResults"></MatchResults>
     </div>
 </template>
+
 <script>
 // @ is an alias to /src
-import MatchResults from "@/components/HelloWorld.vue"
+import MatchResults from "@/components/MatchResults.vue"
+
+import axios from 'axios'
+
+const BaseUrl = "http://localhost:60962/api/";
+
+function buildUrl (url) {
+    return BaseUrl + url;
+}
 
 export default {
   name: 'about',
-  data: {
+  data: function () {
+        return {
     teams: [], // create an array of the sections
     homeTeam: void 0, // set default section to 'home'
     awayTeam: void 0, // set default section to 'home'
-    matchResults: [],
+    matchResults: {},
       loading: false,
       isShowMatch: false,
     title: ''
-  },
+        }
+      },
   mounted () {
     this.getLeague();
     this.getTeams();
@@ -48,10 +59,11 @@ export default {
             console.log("getteams")
             let url = buildUrl('league/getLeague')
             console.log(url)
-            axios.get(url).then((response) => {
-                console.log(response)
-                this.title = response.data.Name;
-              }).catch((error) => { console.log(error); });
+            // axios.get(url).then((response) => {
+            //     console.log(response)
+            //     this.title = response.data.Name;
+            //   }).catch((error) => { console.log(error); });
+            this.title = "hahaha"
     
           },
       getTeams() {
@@ -78,19 +90,19 @@ export default {
           ).then((response) => {
               console.log(response)
               this.matchResults = response.data;
-              setTimeout(function () {
-                  vm.isShowMatch = true
-                  vm.loading =false
-                vm.$refs.blogpost.proBar = 0
-                vm.$refs.blogpost.inTimeGoalHomeTeam = 0
-                vm.$refs.blogpost.inTimeGoalAwayTeam = 0
-                vm.$refs.blogpost.matching(vm.$refs.blogpost)
+              let me = this
+              console.log(me)
+              setTimeout( ()=>{
+                console.log(me)
+                  me.isShowMatch = true
+                  me.loading =false
+                me.$refs.blogpost.proBar = 0
+                me.$refs.blogpost.inTimeGoalHomeTeam = 0
+                me.$refs.blogpost.inTimeGoalAwayTeam = 0
+                me.$refs.blogpost.matching(me.$refs.blogpost)
               }, 1000);
-              
-              
-              
           }).catch((error) => { console.log(error); });
-    }
+      },
     },
   components: {
     MatchResults
